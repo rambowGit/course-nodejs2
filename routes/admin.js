@@ -1,23 +1,31 @@
 const express = require('express')
 const router = express.Router()
+const { 
+  setFavoritSkills,
+  updateSkills,
+  testDB
+} = require('../controllers/adminCtrl');
 
-router.get('/', (req, res, next) => {
-  // TODO: Реализовать, подстановку в поля ввода формы 'Счетчики'
-  // актуальных значений из сохраненых (по желанию)
-  res.render('pages/admin', { title: 'Admin page' })
-})
+router.get('/test', testDB);
 
-router.post('/skills', (req, res, next) => {
-  /*
+ 
+/* 
+  TODO: Реализовать, подстановку в поля ввода формы 'Счетчики'
+   актуальных значений из сохраненых (по желанию)
+*/ 
+router.get('/', setFavoritSkills);
+
+
+/*
   TODO: Реализовать сохранение нового объекта со значениями блока скиллов
 
-    в переменной age - Возраст начала занятий на скрипке
-    в переменной concerts - Концертов отыграл
-    в переменной cities - Максимальное число городов в туре
-    в переменной years - Лет на сцене в качестве скрипача
-  */
-  res.send('Реализовать сохранение нового объекта со значениями блока скиллов')
-})
+  в переменной age - Возраст начала занятий на скрипке
+  в переменной concerts - Концертов отыграл
+  в переменной cities - Максимальное число городов в туре
+  в переменной years - Лет на сцене в качестве скрипача
+*/
+router.post('/skills', updateSkills);
+
 
 router.post('/upload', (req, res, next) => {
   /* TODO:
