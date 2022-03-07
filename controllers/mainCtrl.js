@@ -1,5 +1,5 @@
 const express = require('express')
-const { products, skills } = require('../database/data.json')
+const { products, skills } = require('../database/data-copy.json')
 const mailHandler = require('../mail/mail.js');
 const dbConnector = require('../database/dbConfig');
 

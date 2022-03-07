@@ -60,7 +60,7 @@ const testDB = async (req, res) => {
       await db.write();
       // возвращаем обновленный массив
       res.status(201);
-      res.redirect('/admin');
+      res.redirect('/');
     } catch (e) {
         console.error('Error while update skills: ', e)
       }    
