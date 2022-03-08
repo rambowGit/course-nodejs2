@@ -1,14 +1,9 @@
 const express = require('express')
 const router = express.Router()
-const { 
-  setFavoritSkills,
-  updateSkills,
-  testDB
-} = require('../controllers/adminCtrl');
+const { setFavoritSkills, updateSkills, testDB } = require('../controllers/skillsCtrl');
+const {upload, addProduct} = require('../controllers/fileUploadCtrl');
 
-router.get('/test', testDB);
 
- 
 /* 
   TODO: Реализовать, подстановку в поля ввода формы 'Счетчики'
    актуальных значений из сохраненых (по желанию)
@@ -27,15 +22,13 @@ router.get('/', setFavoritSkills);
 router.post('/skills', updateSkills);
 
 
-router.post('/upload', (req, res, next) => {
-  /* TODO:
-   Реализовать сохранения объекта товара на стороне сервера с картинкой товара и описанием
-    в переменной photo - Картинка товара
-    в переменной name - Название товара
-    в переменной price - Цена товара
-    На текущий момент эта информация хранится в файле data.json  в массиве products
-  */
-  res.send('Реализовать сохранения объекта товара на стороне сервера')
-})
-
-module.exports = router
+/* TODO:
+  Реализовать сохранения объекта товара на стороне сервера с картинкой товара и описанием
+  в переменной photo - Картинка товара
+  в переменной name - Название товара
+  в переменной price - Цена товара
+  На текущий момент эта информация хранится в файле data.json  в массиве products
+*/
+router.post('/upload', upload.single('photo'), addProduct);
+       
+module.exports = router;
