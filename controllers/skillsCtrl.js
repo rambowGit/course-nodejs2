@@ -8,7 +8,6 @@ const db = dbConnector();
 /*
 Show faworit skills value in web-form
 Default GET controller for /admin
-
 */
 const setFavoritSkills = (req, res) => { 
   res.render('pages/admin', { 
@@ -23,12 +22,18 @@ const setFavoritSkills = (req, res) => {
 Update all skills
 */
 
-const updateSkills = async (req, res) => {
+const updateSkills = async (req, res) => {   
+  // DB
   try {
     // DB init
     await db.read();
 
     const updatedSkills = req.body; // from express.urlencoded in app.js
+    // validation
+    const valid = validation(updatedSkills);
+    if (valid.err) {
+      return res.redirect(`/?msgskill=${valid.status}`);
+    }
 
     let skills = db.data?.skills;
     
@@ -36,14 +41,9 @@ const updateSkills = async (req, res) => {
     skills[0].number = updatedSkills.age;
     skills[1].number = updatedSkills.concerts;
     skills[2].number = updatedSkills.cities;
-    skills[3].number = updatedSkills.years;
-    
-    // save
-    const valid = validation(updatedSkills);
-    if (valid.err) {
-      return res.redirect(`/?msgskill=${valid.status}`);
-    }
-
+    skills[3].number = updatedSkills.years;    
+   
+    // save  
     await db.write();
     // will be redirected to skillsCtrl.setFavoritSkills controller, as default GET controller for /admin
     res.redirect('/admin?msgskill=Скилы успешно обновлены!');   

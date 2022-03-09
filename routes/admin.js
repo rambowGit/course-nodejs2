@@ -2,13 +2,16 @@ const express = require('express')
 const router = express.Router()
 const { setFavoritSkills, updateSkills, testDB } = require('../controllers/skillsCtrl');
 const {upload, addProduct} = require('../controllers/fileUploadCtrl');
+const {isAdmin, loginHandler, getAdminPage, getLoginPage} = require('../controllers/loginCtrl');
+
 
 
 /* 
   TODO: Реализовать, подстановку в поля ввода формы 'Счетчики'
    актуальных значений из сохраненых (по желанию)
 */ 
-router.get('/', setFavoritSkills);
+router.get('/', isAdmin, setFavoritSkills);
+
 
 
 /*

@@ -29,8 +29,9 @@ const upload = multer({ storage });
  DB update
  msgfile - HTML-message after upload, see skillsCtrl.setFavoritSkills
  */
- const addProduct = async (req, res) => {
+ const addProduct = async (req, res) => { 
  
+  //DB
   try {
     await db.read();
 
@@ -38,14 +39,14 @@ const upload = multer({ storage });
     let products = db.data?.products;
     const {name, price} = req.body;
     const src = path.join('assets','img', 'products', `${prefix}-${req.file.originalname}`);
-    const fields = {src, name, price};
-    
-    // check fields
+    const fields = {src, name, price}; 
+
+    // web-form validation
     const valid = validation(fields, req.file);
     if (valid.err) {
       return res.redirect(`/admin?msgfile=${valid.status}`);
     }
-    
+        
     products.push(fields);
     // will be redirected to skillsCtrl.setFavoritSkills controller, as default GET controller for /admin
     res.redirect('/admin?msgfile=Товар успешно добавлен'); 
