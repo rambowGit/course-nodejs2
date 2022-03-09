@@ -4,12 +4,13 @@ const uuid = require('uuid').v4;
 const dbConnector = require('../database/dbConfig');
 const prefix = uuid();
 const fs = require('fs');
+const db = dbConnector();
+
 
 
 /**
  * File upload config
  */
-const db = dbConnector();
 const destPath = path.join(process.cwd(), 'public', 'assets','img', 'products');
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
