@@ -7,7 +7,7 @@ const fs = require('fs');
 
 
 /**
- * DB connection
+ * File upload config
  */
 const db = dbConnector();
 const destPath = path.join(process.cwd(), 'public', 'assets','img', 'products');
