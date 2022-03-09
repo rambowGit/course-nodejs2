@@ -10,6 +10,7 @@ const {isAdmin, loginHandler, getAdminPage, getLoginPage} = require('../controll
   TODO: Реализовать, подстановку в поля ввода формы 'Счетчики'
    актуальных значений из сохраненых (по желанию)
 */ 
+// admin-page render. Permissions validation - isAdmin
 router.get('/', isAdmin, setFavoritSkills);
 
 
