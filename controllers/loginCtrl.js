@@ -10,11 +10,10 @@ const isAdmin = (req, res, next) => {
   // if cookie contains isAdmin
   if (req.session.isAdmin) {
     // go to next route
-    return next()
+    return next();
   }
   // default behavior
-  res.redirect(301, '/?msg=Неправильный логин или пароль!')
-  //res.send('Неправильный логин или пароль!');
+  res.redirect('/login?msglogin=Введите логин (ваш email) или пароль!')
 }
 
 /*
@@ -31,25 +30,21 @@ const loginHandler = async (req, res) => {
   // validation
   const valid = validation(userCreds);
   if (valid.err) {
-    return res.redirect(`/admin?msglogin=${valid.status}`); //TODO
+    return res.redirect(`/login?msglogin=${valid.status}`); 
   }
 
   // get credential from DB
   try {
     // DB init
     await db.read();
-    let dbCredential  = db.data?.credential;    
-    console.log("db.data: ", db.data);
-    
+    let dbCredential  = db.data?.credential;        
     if ((enteredEmail === dbCredential.email) && (enteredPasswd === dbCredential.password)){
-      console.log("Логин и пароль совпали", dbCredential.email, dbCredential.password);
 
       req.session.isAdmin = true
       res.redirect('/admin?msglogin=Аутентификция пройдена!');   
     } else {
-      res.send(`логин или пароль не верны: ${enteredEmail}, ${enteredPasswd}`);
-    }
-
+      res.redirect('/admin?msglogin=Аутентификция не пройдена!'); 
+    }   
       
   } catch (e) {
       console.error('Error while login: ', e);
@@ -67,9 +62,12 @@ const getAdminPage = (req, res) => {
  Else need login
 */
 const getLoginPage = (req, res) => {
-  res.render('pages/login', { title: 'SigIn page' });
+  console.log("getLoginPage activated: ", req.query.msglogin);
+  res.render('pages/login', { 
+    title: 'SigIn page',
+    msglogin: req.query.msglogin,
+    msglogin: req.query.msglogin });
 }
-
 
 
 /**

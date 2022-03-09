@@ -1,17 +1,43 @@
-const express = require('express')
-const { products, skills } = require('../database/data-copy.json')
 const mailHandler = require('../mail/mail.js');
-const fs = require('fs');
+const dbConnector = require('../database/dbConfig');
+const db = dbConnector();
 
 
-const getAllData = (req, res) => {
-  res.render('pages/index', { 
-    title: 'Main page', 
-    products, 
-    skills, 
-    msgemail: req.query.msgemail 
-  })
+
+const getCurrentSkillsAndProducts = async () => {
+  await db.read();
+  return {
+    skills: db.data.skills,
+    products:  db.data.products
+  }
 }
+
+/*
+Show favorite skills value in web-form
+Default GET controller for /admin
+*/
+const getAllData = async (req, res) => {  
+  const dbValue = await getCurrentSkillsAndProducts();
+  const products = dbValue.products;
+  const skills = dbValue.skills;
+    //console.log("skills: ", skills);
+    res.render('pages/index', { 
+      title: 'Main page', 
+      products, 
+      skills, 
+      msgemail: req.query.msgemail})
+};
+ 
+
+
+// const getAllData = (req, res) => {
+//   res.render('pages/index', { 
+//     title: 'Main page', 
+//     products, 
+//     skills, 
+//     msgemail: req.query.msgemail 
+//   })
+// }
 
 /*
 to send email from web-form

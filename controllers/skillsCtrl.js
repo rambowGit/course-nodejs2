@@ -1,27 +1,31 @@
-const { products, skills } = require('../database/data-copy.json');
 const dbConnector = require('../database/dbConfig');
-const fs = require('fs');
-
-
 const db = dbConnector();
 
+
+
+const getCurrentSkills = async () => {
+  await db.read();
+  return db.data.skills;
+}
+
 /*
-Show faworit skills value in web-form
+Show favorite skills value in web-form
 Default GET controller for /admin
 */
-const setFavoritSkills = (req, res) => { 
-  res.render('pages/admin', { 
+const setFavoritSkills = async (req, res) => {  
+  const skills = await getCurrentSkills();
+    res.render('pages/admin', { 
     title: 'Admin page',
     skills, 
     msgskill: req.query.msgskill,
-    msgfile: req.query.msgfile} );
-  }
+    msgfile: req.query.msgfile}) 
+};
+ 
 
 
 /*
 Update all skills
 */
-
 const updateSkills = async (req, res) => {   
   // DB
   try {
@@ -47,7 +51,7 @@ const updateSkills = async (req, res) => {
     await db.write();
     // will be redirected to skillsCtrl.setFavoritSkills controller, as default GET controller for /admin
     res.redirect('/admin?msgskill=Скилы успешно обновлены!');   
-  
+    
   } catch (e) {
       console.error('Error while update skills: ', e);
     }    

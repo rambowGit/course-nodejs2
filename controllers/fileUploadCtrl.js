@@ -3,9 +3,7 @@ const path = require('path');
 const uuid = require('uuid').v4;
 const dbConnector = require('../database/dbConfig');
 const prefix = uuid();
-const fs = require('fs');
 const db = dbConnector();
-
 
 
 /**

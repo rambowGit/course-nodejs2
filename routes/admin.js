@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const { setFavoritSkills, updateSkills, testDB } = require('../controllers/skillsCtrl');
 const {upload, addProduct} = require('../controllers/fileUploadCtrl');
-const {isAdmin, loginHandler, getAdminPage, getLoginPage} = require('../controllers/loginCtrl');
+const {isAdmin} = require('../controllers/loginCtrl');
 
 
 
@@ -12,7 +12,6 @@ const {isAdmin, loginHandler, getAdminPage, getLoginPage} = require('../controll
 */ 
 // admin-page render. Permissions validation - isAdmin
 router.get('/', isAdmin, setFavoritSkills);
-
 
 
 /*
