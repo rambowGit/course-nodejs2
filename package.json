@@ -24,6 +24,7 @@
   "dependencies": {
     "cross-env": "^7.0.2",
     "express": "^4.17.1",
+    "express-session": "^1.17.2",
     "http-errors": "^1.8.0",
     "lowdb": "github:dankreiger/lowdb#chore/esm-cjs-hybrid-WITH-LIB",
     "morgan": "^1.10.0",
